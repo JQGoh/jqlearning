@@ -1,0 +1,5 @@
+# Logs #
+.ropeproject
+.pyc
+.ipynb_checkpoints
+__pycache__
