@@ -15,9 +15,8 @@ def summary(df):
         1) Summary of your text data using describe()
         2) Histogram of your numeric data
     """
-
     print("-"*80)
-    print("*"*20 + "    Begin of the summary of text data    " + "*"*20)
+    print("*"*20 + "    Begin of the summary of text data   " + "*"*20)
     print("-"*80)
     text_df = df.select_dtypes(exclude=numerics)
     for x in text_df.columns:
@@ -25,7 +24,7 @@ def summary(df):
         print("\n")
 
     print("-"*80)
-    print("*"*20 + "    End of the summary of text data    " + "*"*20)
+    print("*"*20 + "    End of the summary of text data     " + "*"*20)
     print("-"*80)
 
     num_df = df.select_dtypes(include=numerics)
