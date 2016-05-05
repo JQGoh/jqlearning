@@ -10,6 +10,6 @@ The files are mainly grouped under different categories as shown below:
 1) Simulation
 Codes designed for discussions related to scientific simualtions. 
 
-2) PreProcessingData
+2) PreprocessingData
 Codes designed for data preprocessing
 

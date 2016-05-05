@@ -1,5 +1,9 @@
 # Logs #
-.ropeproject
-.pyc
+*.ropeproject
+*.pyc
 .ipynb_checkpoints
 __pycache__
+*.swp
+# file #
+Remarks.txt
+test.py
