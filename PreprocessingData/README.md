@@ -10,7 +10,8 @@
 
 # Remarks 
 1. Required packages, designed scripts tested with 
-  * Pandas version 0.16.0
+  * Python 3.5.1
+  * Pandas version 0.17.1
   * Numpy 1.11.0
   * Scipy 0.17.0
   * Matplotlib 1.5.1

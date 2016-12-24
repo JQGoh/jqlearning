@@ -6,15 +6,20 @@ from itertools import combinations, chain
 
 
 class DataIn(object):
-    """Represents an object which describes the imported data
+    """Represents an object which describes the imported data.
 
-    Attributes:
-        df: pandas.DataFrame
-        fname: imported file name
-        ftype: imported file type
+    Attributes
+    __________
+    df: pandas.DataFrame.
+
+    fname: str,
+        imported file name.
+
+    ftype: str,
+        imported file type.
     """
     def __init__(self, fname, ftype='csv'):
-        """Create DataFrame from the imported file (default: CSV file type)"""
+        """Create DataFrame from the imported file (default: CSV file type)."""
         try:
             if (ftype == 'csv'):
                 self.df = pd.read_csv(fname)
@@ -26,7 +31,7 @@ class DataIn(object):
         self.check()
 
     def check(self):
-        """Checking the  missing values (NA or ,,)"""
+        """Checking the  missing values (NA or ,,)."""
         warn = 0
         for x in self.df.columns:
             y = self.df[x]
@@ -40,11 +45,13 @@ class DataIn(object):
             print("No missing values in the columns of %s!\n" % self.fname)
 
     def numeric(self, clean=True):
-        """Convert the appropriate data to numeric type, and discard NaN
+        """Convert the appropriate data to numeric type, and discard NaN.
 
-        Args:
-            clean: Boolean, if True cleaning all row entries if NaN found
-                if False, no cleaning of NaN
+        Parameters
+        __________
+        clean: boolean, 
+            True if cleaning all row entries where NaN found, False
+            otherwise (no cleaning of NaN).
         """
 
         colnames = self.df.columns
@@ -64,19 +71,22 @@ class DataIn(object):
             self.df = self.df.dropna()
 
     def summarize(self):
-        """Provide the summary of your text and numeric data"""
+        """Provide the summary of your text and numeric data."""
         summary(self.df)
 
     def unique_sets(self):
         """Check the columns that share the same number of unique values.
 
-        Returns:
-            dict: Dictionary that contains number of unique values as keys,
-            features sharing the same set of number as values
+        Returns
+        _______
+        dict: dict,
+            Dictionary that contains the number of unique values as keys,
+            features sharing the same set of number as values.
 
-        Outputs:
-            Print out the number of unique values and their corresponding
-            features
+        Outputs
+        _______
+        Print out the number of unique values and their corresponding
+        features.
         """
         colnames = self.df.columns
         uniq = {}
@@ -99,11 +109,12 @@ class DataIn(object):
         """Check the columns that share the same number of unique values.
         This function will check whether the unique values of a column will
         have one to one correspondence with other columns sharing the same
-        number of unique values
+        number of unique values.
 
-        Outputs:
-            1) Columns sharing the same unique values which have one-to-one
-            correspondence, it available
+        Outputs
+        _______
+        Columns sharing the same unique values which have one-to-one
+        correspondence, it available.
         """
         uniq = self.unique_sets()
 

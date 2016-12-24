@@ -9,9 +9,9 @@ from data import DataIn
 if __name__ == "__main__":
     train = DataIn("train-corrupted.csv")
     train.one2one_sets()
+
     train = DataIn("train.csv")
     train.one2one_sets()
-
 
     weather = DataIn("weather.csv")
     weather.one2one_sets()
