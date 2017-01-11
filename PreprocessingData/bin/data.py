@@ -18,15 +18,17 @@ class DataIn(object):
     ftype: str,
         imported file type.
     """
-    def __init__(self, fname, ftype='csv'):
-        """Create DataFrame from the imported file (default: CSV file type)."""
+    def __init__(self, fname):
+        """Create DataFrame from the imported file."""
         try:
-            if (ftype == 'csv'):
-                self.df = pd.read_csv(fname)
-                self.fname = fname
-                self.ftype = ftype
-        except:
-            print("Imported file type is not supported!")
+            ftype = fname[-4:]
+            assert(ftype == '.csv')
+            self.df = pd.read_csv(fname)
+            self.fname = fname
+            # Assume the file extension has three characters
+            self.ftype = ftype
+        except AssertionError:
+            print("\nImported file type is not .csv!\n")
             raise
         self.check()
 
