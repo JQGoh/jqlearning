@@ -19,7 +19,13 @@ class DataIn(object):
         imported file type.
     """
     def __init__(self, fname):
-        """Create DataFrame from the imported file."""
+        """Create DataFrame from the imported file.
+        
+        Parameters
+        __________
+        fname: str, 
+            The filename of imported file.
+        """
         try:
             ftype = fname[-4:]
             assert(ftype == '.csv')
