@@ -109,7 +109,8 @@ class DataIn(object):
                 uniq[total].append(x)
 
         print("Number of unique values and their corresponding features")
-        print(uniq)
+        for k in uniq.keys():
+            print("Number of unique values: {}, Features: {}".format(k, uniq[k]))
 
         return uniq
 
@@ -153,5 +154,6 @@ class DataIn(object):
                     v.remove(factor)
 
                 if not warn:
+                    print("Conclusion:")
                     print("Features {} have {} values which are one-to-one "
                           "correspondence.\n".format(v, k))
