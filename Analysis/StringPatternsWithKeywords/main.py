@@ -8,20 +8,20 @@ def regex_rules(words, extract=0):
     provided keywords.
 
     Parameters
-    __________
-    words: list,
+    ----------
+    words : list
         A list of keywords or regex patterns.
     
-    extract: int,
-        0 - Only the provided keywords or regex patterns.
-        1 - Including words/word adjacent to the keywords or regex patterns.
-        2 - Including the whole sentence having the keywords or regex 
-            patterns. It assumes a sentence is sandwiched by two periods
-            or start/end boundaries.
+    extract : int, default 0
+        - 0 : Only the provided keywords or regex patterns.
+        - 1 : Including words/word adjacent to the keywords or regex patterns.
+        - 2 : Including the whole sentence having the keywords or regex
+              patterns. It assumes a sentence is sandwiched by two periods
+              or start/end boundaries.
             
     Returns
-    _______
-    patterns: list,
+    -------
+    patterns : list
         A list of regex rules containing the keywords in the 'words', 
         according to the rules defined by 'extract'.
     """
@@ -49,14 +49,14 @@ def regex(text, keyword, rule):
     based on the designed regular expression patterns.
 
     Parameters
-    __________
-    text: str,
+    ----------
+    text : str
         The input text.
 
-    keyword: list,
+    keyword : list
         A list of keywords or regex patterns.
 
-    rule: int,
+    rule : int
         Same as the 'extract' in the regex_rules function.
     """
     print(text)
