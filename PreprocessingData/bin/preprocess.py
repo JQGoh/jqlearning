@@ -1,4 +1,4 @@
-#!usr/bin/env python
+""" Functions for preprocessing data."""
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,14 +10,14 @@ numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 def summary(df):
     """Provide the summary of your text and numeric data.
 
-    Parameters
-    __________
-    df: pandas.DataFrame.
+    Calling this function provides the summary of text data using
+    the built-in method describe() of pandas.DataFrame.
+    Hisogram plots will be generated for the numeric data.
 
-    Outputs
-    _______
-    1) Summary of your text data using describe().
-    2) Histogram of your numeric data.
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame which describes the data
     """
     print("-"*80)
     print("*"*20 + "    Begin of the summary of text data   " + "*"*20)
@@ -38,15 +38,16 @@ def summary(df):
 
 
 def one2one(df):
-    """Check if the given two columns of a data frame have values that
-    are one-to-one correspondence.
+    """Check whether the two columns of a DataFrame have one to one correspondence.
 
     Parameters
     __________
-    df: pandas.DataFrame that has two columns only.
+    df : pandas.DataFrame, shape [n_samples, 2]
 
-    Returns:
-    boolean: True if one-to-one correspondence found.
+    Returns
+    -------
+    relation : boolean
+        True, if one to one correspondence found.
     """
     assert len(df.columns) == 2, "DataFrame does not have two columns"
 
@@ -58,7 +59,7 @@ def one2one(df):
     counts.append(nums.values)
 
     # check whether the counts are 1 for each row
+    relation = False
     if np.all(counts[0] == 1):
-        return True
-    else:
-        return False
+        relation = True
+        return relation 
