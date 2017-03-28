@@ -10,7 +10,7 @@ class DataIn(object):
 
     Parameters
     ----------
-    fname: str 
+    fname : str 
         The filename of imported .csv file.
 
     Attributes
@@ -109,7 +109,9 @@ class DataIn(object):
             else:
                 uniq[total].append(x)
 
+        print("-"*80)
         print("Number of unique values and their corresponding features")
+        print("-"*80)
         for k in uniq.keys():
             print("Number of unique values: {}, Features: {}".format(
                 k, uniq[k]))
@@ -125,6 +127,8 @@ class DataIn(object):
         """
         uniq = self.unique_sets()
 
+        print('*'*10 + ' '*10 + "Conclusion for one to one correspondence" +
+                " "*10 + "*"*10)
         # keys: Total number of unique values. values: column names
         for k, v in uniq.items():
             if len(v) > 1:
@@ -152,6 +156,5 @@ class DataIn(object):
                     v.remove(factor)
 
                 if not warn:
-                    print("Conclusion:")
-                    print("Features {} have {} values which are one-to-one "
-                          "correspondence.\n".format(v, k))
+                    print("Features {} have {} unique values"
+                          "which are one to one correspondence.\n".format(v, k))
