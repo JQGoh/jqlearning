@@ -1,4 +1,4 @@
-#!usr/bin/env python
+""" DataIn class that can be used to load data .csv, followed by preprocessing"""
 
 import pandas as pd
 from preprocess import summary, one2one
@@ -6,32 +6,30 @@ from itertools import combinations, chain
 
 
 class DataIn(object):
-    """Represents an object which describes the imported data.
+    """An object describing the imported data from .csv file
+
+    Parameters
+    ----------
+    fname: str 
+        The filename of imported .csv file.
 
     Attributes
-    __________
-    df: pandas.DataFrame.
+    ----------
+    df : pandas.DataFrame
+        DataFrame which describes the data.
 
-    fname: str,
-        imported file name.
+    fname : str
+        Imported file name.
 
-    ftype: str,
-        imported file type.
+    ftype : str
+        Imported file type, '.csv' in this case.
     """
     def __init__(self, fname):
-        """Create DataFrame from the imported file.
-        
-        Parameters
-        __________
-        fname: str, 
-            The filename of imported file.
-        """
         try:
             ftype = fname[-4:]
             assert(ftype == '.csv')
             self.df = pd.read_csv(fname)
             self.fname = fname
-            # Assume the file extension has three characters
             self.ftype = ftype
         except AssertionError:
             print("\nImported file type is not .csv!\n")
@@ -39,7 +37,10 @@ class DataIn(object):
         self.check()
 
     def check(self):
-        """Checking the  missing values (NA or ,,)."""
+        """Check the  missing values (NA or ,,) found in the data.
+
+        Inform the user if any missing values found in the data.
+        """
         warn = 0
         for x in self.df.columns:
             y = self.df[x]
@@ -56,12 +57,11 @@ class DataIn(object):
         """Convert the appropriate data to numeric type, and discard NaN.
 
         Parameters
-        __________
-        clean: boolean, 
-            True if cleaning all row entries where NaN found, False
-            otherwise (no cleaning of NaN).
+        ----------
+        clean : boolean, default True
+            If True, cleaning all row entries where NaN found.
+            If False, no cleaning of row entries with NaN found. 
         """
-
         colnames = self.df.columns
         temp = self.df.apply(pd.to_numeric, args=('coerce',))
         removed = []
@@ -79,22 +79,23 @@ class DataIn(object):
             self.df = self.df.dropna()
 
     def summarize(self):
-        """Provide the summary of your text and numeric data."""
+        """Provide the summary of your text and numeric data.
+
+        This function calls preprocess.summary on imported DataFrame.
+        """
         summary(self.df)
 
     def unique_sets(self):
-        """Check the columns that share the same number of unique values.
+        """Check the columns that share the same total number of unique values.
+
+        Calling this function prints out the total number of unique values 
+        and their corresponding features.
 
         Returns
-        _______
-        dict: dict,
-            Dictionary that contains the number of unique values as keys,
+        -------
+        dict : dict
+            Dictionary with the total number of unique values as keys,
             features sharing the same set of number as values.
-
-        Outputs
-        _______
-        Print out the number of unique values and their corresponding
-        features.
         """
         colnames = self.df.columns
         uniq = {}
@@ -110,20 +111,17 @@ class DataIn(object):
 
         print("Number of unique values and their corresponding features")
         for k in uniq.keys():
-            print("Number of unique values: {}, Features: {}".format(k, uniq[k]))
+            print("Number of unique values: {}, Features: {}".format(
+                k, uniq[k]))
 
         return uniq
 
     def one2one_sets(self):
-        """Check the columns that share the same number of unique values.
-        This function will check whether the unique values of a column will
-        have one to one correspondence with other columns sharing the same
-        number of unique values.
+        """Identify one to one correspondence relationship.
 
-        Outputs
-        _______
-        Columns sharing the same unique values which have one-to-one
-        correspondence, it available.
+        Calling this function will suggest the column names which have
+        the same total number of unique values and their values are one to
+        one correspondence, if available.
         """
         uniq = self.unique_sets()
 
@@ -149,7 +147,7 @@ class DataIn(object):
                     for x in problems:
                         factors[x[0]] += 1
                         factors[x[1]] += 1
-                    # Select one of the features that repeats the most will work
+                    # Select one of the features that repeats the most 
                     factor = max(factors, key=factors.get)
                     v.remove(factor)
 

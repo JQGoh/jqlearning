@@ -4,6 +4,7 @@
 .ipynb_checkpoints
 __pycache__
 *.swp
+*.DS_Store
 # file #
 Remarks.txt
 test.py
