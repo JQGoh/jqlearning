@@ -7,11 +7,11 @@ from data import DataIn
 # from preprocess import one2one
 
 if __name__ == "__main__":
-    train = DataIn("train-corrupted.csv")
-    train.one2one_sets()
-
     train = DataIn("train.csv")
     train.one2one_sets()
+
+    corrupted = DataIn("train-corrupted.csv")
+    corrupted.one2one_sets()
 
     weather = DataIn("weather.csv")
     weather.one2one_sets()

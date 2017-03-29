@@ -139,10 +139,10 @@ class DataIn(object):
                     for x in combinations(v, 2):
                         if not one2one(self.df[[x[0], x[1]]]):
                             warn = True
-                            # Record the non one-to-one correspondence feature
+                            # Record the non one to one correspondence feature
                             problems.append(x)
 
-                    # Break the while loop if all are one-to-one
+                    # Break the while loop if all are one to one
                     if not warn:
                         break
                     # Remove common factors from v, and count the occurences
@@ -156,5 +156,5 @@ class DataIn(object):
                     v.remove(factor)
 
                 if not warn:
-                    print("Features {} have {} unique values"
+                    print("Features {} have {} unique values\n"
                           "which are one to one correspondence.\n".format(v, k))
