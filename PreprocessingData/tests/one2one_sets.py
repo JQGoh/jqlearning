@@ -1,4 +1,4 @@
-""" train.csv file downloaded from
+""" train.csv and weather.csv files downloaded from
 https://www.kaggle.com/c/predict-west-nile-virus/data """
 
 import sys
