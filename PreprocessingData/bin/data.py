@@ -37,9 +37,9 @@ class DataIn(object):
         self.check()
 
     def check(self):
-        """Check the  missing values (NA or ,,) found in the data.
+        """Check the  missing value or NaN (Not a Number) record found in the data.
 
-        Inform the user if any missing values found in the data.
+        Inform the user if any missing values or NaN found in the data.
         """
         warn = 0
         for x in self.df.columns:
@@ -54,7 +54,7 @@ class DataIn(object):
             print("No missing values in the columns of %s!\n" % self.fname)
 
     def numeric(self, clean=True):
-        """Convert the appropriate data to numeric type, and discard NaN.
+        """Convert the features with partial numeric records to numeric type.
 
         Parameters
         ----------
@@ -93,7 +93,7 @@ class DataIn(object):
 
         Returns
         -------
-        dict : dict
+        uniq : dict
             Dictionary with the total number of unique values as keys,
             features sharing the same set of number as values.
         """
