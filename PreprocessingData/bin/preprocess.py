@@ -41,7 +41,7 @@ def one2one(df):
     """Check whether the two columns of a DataFrame have one to one correspondence.
 
     Parameters
-    __________
+    ----------
     df : pandas.DataFrame, shape [n_samples, 2]
 
     Returns

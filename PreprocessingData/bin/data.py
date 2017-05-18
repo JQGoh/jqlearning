@@ -121,9 +121,12 @@ class DataIn(object):
     def one2one_sets(self):
         """Identify one to one correspondence relationship.
 
-        Calling this function will suggest the column names which have
-        the same total number of unique values and their values are one to
-        one correspondence, if available.
+        Returns
+        -------
+        dict_one2one : dict
+            Dictionary with sets of features which are one to one
+            correspondence, if available. 
+            Each set is grouped by the key of dictionary.
         """
         uniq = self.unique_sets()
 
@@ -132,29 +135,34 @@ class DataIn(object):
         # keys: Total number of unique values. values: column names
         for k, v in uniq.items():
             if len(v) > 1:
-                # Write a while loop to check all combination pairs
-                while (len(v) >= 2):
-                    warn = False
-                    problems = []
-                    for x in combinations(v, 2):
-                        if not one2one(self.df[[x[0], x[1]]]):
-                            warn = True
-                            # Record the non one to one correspondence feature
-                            problems.append(x)
+                pairs = []
+                for x in combinations(v, 2):
+                    if one2one(self.df[[x[0], x[1]]]):
+                        pairs.append(x)
 
-                    # Break the while loop if all are one to one
-                    if not warn:
-                        break
-                    # Remove common factors from v, and count the occurences
-                    names = set(chain(*problems))
-                    factors = dict([(x, 0) for x in names])
-                    for x in problems:
-                        factors[x[0]] += 1
-                        factors[x[1]] += 1
-                    # Select one of the features that repeats the most 
-                    factor = max(factors, key=factors.get)
-                    v.remove(factor)
+                # If no pair of features which are one to one correspondent
+                if not pairs:
+                    continue
 
-                if not warn:
-                    print("Features {} have {} unique values\n"
-                          "which are one to one correspondence.\n".format(v, k))
+                dict_one2one = {}
+                dict_key = 1
+                dict_one2one[dict_key] = set(pairs[0])
+                for x in pairs[1:]:
+                    new = True 
+                    for key in dict_one2one.keys():
+                        if (x[0] in dict_one2one[key]) or (
+                                x[1] in dict_one2one[key]):
+                            dict_one2one[key].add(x[0])
+                            dict_one2one[key].add(x[1])
+                            new = False
+                            # If found within the old group, break from for loop
+                            break
+                    if new:
+                        dict_key = dict_key + 1
+                        dict_one2one[dict_key] = set(x)
+               
+                if dict_one2one:
+                    for v in dict_one2one.values():
+                        print("Features {} are one to one correspondence.".
+                                format(v))
+                return dict_one2one
