@@ -32,7 +32,11 @@ def summary(df):
     print("-"*80)
 
     num_df = df.select_dtypes(include=numerics)
-    num_df.hist(color='k', alpha=0.5, bins=50, figsize=(14, 14))
+    
+    # Suggest the layout for plotting
+    num_fig_y = int(num_df.shape[1]/4) + 1
+    num_df.hist(color='k', alpha=0.5, bins=50, figsize=(10, num_fig_y*2.5),
+            layout=(num_fig_y, 4))
 
     plt.show()
 
