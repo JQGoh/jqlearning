@@ -16,5 +16,3 @@ The files are mainly grouped under different categories as shown below:
 4. PreprocessingData
   * Update 12.06.2018: Codes were restructured into Python files within a separate folder "scripts".
   * Codes designed for data preprocessing.
-
-
