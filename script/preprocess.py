@@ -2,9 +2,88 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from itertools import combinations
 # Extract the numeric data in the fields of imported
 numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+
+
+def grp_ts_scatter(df, time, feature, grp, col_wrap=4,
+                   markersize=1.5, display_nan=False):
+    """Time-series (date) scatter plots for a feature with respect to groups
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame of your data
+
+    time: str
+        Name that labels the time-series (datetime-like object)
+
+    feature: str
+        Feature name that we investigate the data distribution
+
+    grp: str
+        Column name that we separate the data with reference to
+
+    col_wrap: int
+        Number of columns in a row
+
+    markersize: float
+        Control the scatter spots' sizes
+
+    display_nan: bool, default False
+        If True, plot the missing values at zeroes in red
+    """
+    sns.set(style="darkgrid")
+
+    # explicitly define the xlim, ylim
+    ylim = (df[feature].min(), df[feature].max() )
+    xlim = (df[time].min(), df[time].max())
+    if display_nan:
+        df_copy = nan_zeroes(df, feature)
+        g = sns.FacetGrid(df_copy, col=grp, col_wrap=col_wrap,
+                          xlim=xlim, ylim=ylim)
+    else:
+        g = sns.FacetGrid(df, col=grp, col_wrap=col_wrap,
+                          xlim=xlim, ylim=ylim)
+
+    g.map(plt.plot_date, time, feature, color="steelblue",
+          markersize=markersize)
+    if display_nan:
+        g = g.map(plt.plot_date, time, "nan_" + feature,
+                  color="red", markersize=markersize)
+
+    g.set_xticklabels(rotation='vertical')
+    plt.show()
+
+
+def nan_zeroes(df, feature):
+    """Add a new column with NaN in feature labelled as zeroes,
+    other non-NaN will be labelled as NaN.
+
+    Useful for graphical visualization of the distribution of missing values.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame of your data
+
+    feature: str
+        Feature name that we investigate the missing values
+
+    Returns
+    -------
+    df_copy : pandas.DataFrame
+        Data with outliers or non-outliers set to be np.nan
+    """
+    df_copy = df.copy()
+    new_feature = "nan_" + feature
+    # convert null to zeroes
+    df_copy[new_feature] = np.isnan(df_copy[feature])
+    df_copy[new_feature] = df_copy[new_feature].map(
+        lambda x: 0 if x is True else np.nan)
+    return df_copy
 
 
 def outliers(df, col_names, low=0.05, high=0.95, outlier_as_nan=True):
