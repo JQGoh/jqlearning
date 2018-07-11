@@ -58,6 +58,33 @@ def grp_ts_scatter(df, time, feature, grp, col_wrap=4,
     plt.show()
 
 
+def grp_hist(df, feature, grp, col_wrap=4, bins=50):
+    """Histograms illustrate the data distribution of a feature with respect
+       to groups
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame of your data
+
+    feature: str
+        Feature name that we investigate the data distribution
+
+    grp: str
+        Column name that we separate the data with reference to
+
+    col_wrap: int
+        Number of columns in a row
+
+    bins: int
+        Number of bins for histogram plot
+    """
+    sns.set(style="darkgrid")
+    g = sns.FacetGrid(df, col=grp, col_wrap=col_wrap)
+    g.map(plt.hist, feature, color="steelblue", bins=bins)
+    plt.show()
+
+
 def nan_zeroes(df, feature):
     """Add a new column with NaN in feature labelled as zeroes,
     other non-NaN will be labelled as NaN.
