@@ -8,6 +8,28 @@ from itertools import combinations
 numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 
 
+def sets_grps(list1, list2):
+    """Determine the sets of elements in both groups and their compositions
+
+    Parameters
+    ----------
+    list1: list, or iterable
+
+    list2: list, or iterable
+    """
+    set1 = set(list1)
+    set2 = set(list2)
+    print("Common elements in both sets:")
+    common = set2.intersection(set1)
+    print(common, len(common))
+    print("\nElements of set1 not in set2:")
+    set1_minus_set2 = set1 - set2
+    print(set1_minus_set2, len(set1_minus_set2))
+    print("\nElements of set2 not in set1:")
+    set2_minus_set1 = set2 - set1
+    print(set2_minus_set1, len(set2_minus_set1))
+
+
 def grp_ts_scatter(df, time, feature, grp, col_wrap=4,
                    markersize=1.5, display_nan=False):
     """Time-series (date) scatter plots for a feature with respect to groups
