@@ -4,8 +4,48 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from itertools import combinations
+from scipy.spatial.distance import cdist
 # Extract the numeric data in the fields of imported
 numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+
+
+def pair_dist(df1, df2, dict1, dict2):
+    """Determine Euclidean distances between the values of selected
+    features in DataFrames
+
+    Parameters
+    ----------
+    df1: pandas.DataFrame
+
+    df2: pandas.DataFrame
+
+    dict1: dict
+        key, value pair of dictionary
+        key: Feature defines the groups
+        value: List of features where the data are used for distance
+        evaluation
+
+    dict2: dict
+        key, value pair of dictionary
+        key: Feature defines the groups
+        value: List of features where the data are used for distance
+        evaluation
+
+    Returns
+    -------
+    df: pandas.DataFrame
+        DataFrame having columns from the key of dict2, index from
+        the key of dict1
+    """
+    key1, val1 = list(dict1.items())[0]
+    key2, val2 = list(dict2.items())[0]
+    assert len(val1) == len(val2)
+    pair_dist = cdist(df1[val1].values,
+                      df2[val2].values)
+    df = pd.DataFrame(data=pair_dist,
+                      columns=df2[key2].values,
+                      index=df1[key1].values)
+    return df
 
 
 def sets_grps(list1, list2):
